@@ -1,0 +1,61 @@
+version: "2.2"
+
+services:
+  elasticsearch:
+    restart: on-failure:5
+    image: bitergia/elasticsearch:6.8.6-secured
+    command: elasticsearch -Enetwork.bind_host=0.0.0.0 -Ehttp.max_content_length=2000mb
+    environment:
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+    ports:
+      - 9200:9200
+
+  kibiter:
+    restart: on-failure:5
+    image: bitergia/kibiter:secured-v6.8.6-2
+    environment:
+      - PROJECT_NAME=Development
+      - NODE_OPTIONS=--max-old-space-size=1000
+      - ELASTICSEARCH_URL=https://elasticsearch:9200
+      - ELASTICSEARCH_USER=admin
+      - ELASTICSEARCH_PASSWORD=admin
+    links:
+      - elasticsearch
+    ports:
+      - 5601:5601
+
+  mariadb:
+    restart: on-failure:5
+    image: mariadb:10.0
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=demo_sh
+    command: --wait_timeout=2592000 --interactive_timeout=2592000 --max_connections=300
+    log_driver: "json-file"
+    log_opt:
+      max-size: "100m"
+      max-file: "3"
+
+  sirmordred:
+    restart: on-failure:5
+    image: X-lab2017/sirmordred:latest
+    volumes:
+      - /setup.cfg:/setup.cfg
+      - /projects.json:/projects.json
+      - /menu.yaml:/menu.yaml
+      - /aliaes.json:/aliaes.json
+      - /logs:/logs
+    depends_on:
+      - elasticsearch
+      - kibiter
+      - mariadb
+    links:
+      - elasticsearch
+      - kibiter
+      - mariadb
+    mem_limit: 4g

@@ -1,0 +1,173 @@
+{
+  "git": {
+    "raw": [
+      {
+        "alias": "git_raw"
+      }
+    ],
+    "enrich": [
+      {
+        "alias": "git"
+      },
+      {
+        "alias": "git_author"
+      },
+      {
+        "alias": "git_enrich"
+      },
+      {
+        "alias": "affiliations"
+      },
+      {
+        "alias": "all_enriched"
+      },
+      {
+        "alias": "git_onion-src"
+      }
+    ]
+  },
+  "github": {
+    "raw": [
+      {
+        "alias": "github-raw"
+      }
+    ],
+    "enrich": [
+      {
+        "alias": "github_issues"
+      },
+      {
+        "alias": "github_issues_enrich"
+      },
+      {
+        "alias": "issues_closed"
+      },
+      {
+        "alias": "issues_created"
+      },
+      {
+        "alias": "issues_updated"
+      },
+      {
+        "alias": "affiliations"
+      },
+      {
+        "alias": "all_enriched"
+      },
+      {
+        "alias": "all_enriched_tickets",
+        "filter" : {
+              "terms" : {
+                "pull_request" : ["false"]
+              }
+            }
+      },
+      {
+        "alias": "github_issues_onion-src",
+        "filter" : {
+            "terms" : {
+            "pull_request" : [
+                "false"
+                ]
+            }
+        }
+      },
+      {
+        "alias": "github_prs_onion-src",
+        "filter" : {
+            "terms" : {
+            "pull_request" : [
+                "true"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "github:repo": {
+    "raw": [
+      {
+        "alias": "github_repositories-raw"
+      }
+    ],
+    "enrich": [
+      {
+        "alias": "github_repositories"
+      }
+    ]
+  },
+  "gitee": {
+    "raw": [
+      {
+        "alias": "gitee-raw"
+      }
+    ],
+    "enrich": [
+      {
+        "alias": "gitee_issues"
+      },
+      {
+        "alias": "gitee_issues_enrich"
+      },
+      {
+        "alias": "issues_closed"
+      },
+      {
+        "alias": "issues_created"
+      },
+      {
+        "alias": "issues_updated"
+      },
+      {
+        "alias": "affiliations"
+      },
+      {
+        "alias": "all_enriched"
+      },
+      {
+        "alias": "all_enriched_tickets",
+        "filter" : {
+              "terms" : {
+                "pull_request" : ["false"]
+              }
+            }
+      }
+    ]
+  },
+  "gitee:pull": {
+    "raw": [
+      {
+        "alias": "gitee_prs-raw"
+      }
+    ],
+    "enrich": [
+      {
+        "alias": "gitee_prs"
+      },
+      {
+        "alias": "gitee-prs_enriched"
+      },
+      {
+        "alias": "affiliations"
+      },
+      {
+        "alias": "all_enriched"
+      },
+      {
+        "alias": "all_enriched_tickets"
+      }
+    ]
+  },
+  "gitee:repo": {
+    "raw": [
+      {
+        "alias": "gitee_repositories-raw"
+      }
+    ],
+    "enrich": [
+      {
+        "alias": "gitee_repositories"
+      }
+    ]
+  }
+}
